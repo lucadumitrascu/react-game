@@ -1,0 +1,41 @@
+.player-position-card {
+    background-color: rgb(88, 86, 81);
+    color: white;
+    padding: 1rem;
+    width: fit-content;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.player-position-card h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.player-position-card p {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.player-controls {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.player-controls button {
+    margin: 0.5rem;
+    padding: 0.5rem 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(88, 86, 81);
+    color: white;
+    cursor: pointer;
+}
+
+.player-controls button:hover{
+    opacity: 0.6;
+}
