@@ -1,13 +1,41 @@
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-    setPlayerX, setPlayerY, increasePlayerX,
-    increasePlayerY, decreasePlayerX, decreasePlayerY
+    increasePlayerX, increasePlayerY,
+    decreasePlayerX, decreasePlayerY
 } from '../redux/slices/playerSlice'
 import styles from './PlayerController.module.css'
 
 function PlayerController() {
     const dispatch = useDispatch()
     const player = useSelector((state) => state.player)
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            switch (event.key) {
+                case "ArrowUp":
+                    dispatch(increasePlayerY());
+                    break;
+                case "ArrowDown":
+                    dispatch(decreasePlayerY());
+                    break;
+                case "ArrowLeft":
+                    dispatch(decreasePlayerX());
+                    break;
+                case "ArrowRight":
+                    dispatch(increasePlayerX());
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [dispatch]);
 
     return (
         <>
