@@ -1,3 +1,10 @@
+.player-controller-container {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
 .player-position-card {
     background-color: rgb(88, 86, 81);
     color: white;
@@ -6,7 +13,8 @@
     align-self: center;
     justify-self: center;
     border-radius: 10px;
-    margin-bottom: 2rem;
+    margin-right: 30px;
+
 }
 
 .player-position-card h2 {
@@ -36,6 +44,6 @@
     cursor: pointer;
 }
 
-.player-controls button:hover{
+.player-controls button:hover {
     opacity: 0.6;
 }

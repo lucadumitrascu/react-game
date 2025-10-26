@@ -14,10 +14,10 @@ function PlayerController() {
         const handleKeyDown = (event) => {
             switch (event.key) {
                 case "ArrowUp":
-                    dispatch(increasePlayerY());
+                    dispatch(decreasePlayerY());
                     break;
                 case "ArrowDown":
-                    dispatch(decreasePlayerY());
+                    dispatch(increasePlayerY());
                     break;
                 case "ArrowLeft":
                     dispatch(decreasePlayerX());
@@ -38,22 +38,22 @@ function PlayerController() {
     }, [dispatch]);
 
     return (
-        <>
+        <div className={styles["player-controller-container"]}>
             <div className={styles["player-position-card"]}>
                 <h2>Player Position</h2>
                 <p>X: {player.playerX} | Y: {player.playerY}</p>
             </div>
             <div className={styles["player-controls"]}>
                 <div>
-                    <button onClick={() => dispatch(increasePlayerY())}> &#5123;</button>
+                    <button onClick={() => dispatch(decreasePlayerY())}> &#5123;</button>
                 </div>
                 <div>
                     <button onClick={() => dispatch(decreasePlayerX())}> &#5130;</button>
-                    <button onClick={() => dispatch(decreasePlayerY())}> &#5121;</button>
+                    <button onClick={() => dispatch(increasePlayerY())}> &#5121;</button>
                     <button onClick={() => dispatch(increasePlayerX())}> &#5125;</button>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

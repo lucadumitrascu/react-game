@@ -8,22 +8,28 @@ export const playerSlice = createSlice({
     },
     reducers: {
         setPlayerX: (state, action) => {
-            state.playerX = action.payload;
+            const value = action.payload;
+            if (value > 0 && value < 9) {
+                state.playerX = value;
+            }
         },
         setPlayerY: (state, action) => {
-            state.playerY = action.payload;
+            const value = action.payload;
+            if (value > 0 && value < 9) {
+                state.playerY = value;
+            }
         },
         increasePlayerX: (state) => {
-            state.playerX += 1;
+            if (state.playerX < 8) state.playerX += 1;
         },
         increasePlayerY: (state) => {
-            state.playerY += 1;
+            if (state.playerY < 8) state.playerY += 1;
         },
         decreasePlayerX: (state) => {
-            state.playerX -= 1;
+            if (state.playerX > 1) state.playerX -= 1;
         },
         decreasePlayerY: (state) => {
-            state.playerY -= 1;
+            if (state.playerY > 1) state.playerY -= 1;
         }
     },
 });

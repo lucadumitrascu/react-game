@@ -1,0 +1,25 @@
+.map {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-collapse: collapse;
+}
+
+.map td,
+.map tr {
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgb(88, 86, 81);
+}
+
+.map-cell {
+    background-color: white;
+}
+
+.map-border {
+    background-color: rgb(88, 86, 81);
+}
+
+.map-player {
+    background-color: rgb(255, 0, 0);
+}
