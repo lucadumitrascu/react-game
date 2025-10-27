@@ -14,7 +14,6 @@
     justify-self: center;
     border-radius: 10px;
     margin-right: 30px;
-
 }
 
 .player-position-card h2 {
@@ -46,4 +45,149 @@
 
 .player-controls button:hover {
     opacity: 0.6;
+}
+
+@keyframes movePlayerUp {
+    0% {
+        transform: translateY(0);
+        background-image: url("../assets/playerStripes/playerUp1.png");
+    }
+
+    25% {
+        background-image: url("../assets/playerStripes/playerUp2.png");
+    }
+
+    50% {
+        transform: translateY(-50%);
+        background-image: url("../assets/playerStripes/playerUp1.png");
+    }
+
+    75% {
+        background-image: url("../assets/playerStripes/playerUp2.png");
+    }
+
+    100% {
+        transform: translateY(-100%);
+        background-image: url("../assets/playerStripes/playerUp1.png");
+    }
+}
+
+@keyframes movePlayerDown {
+    0% {
+        transform: translateY(0);
+        background-image: url("../assets/playerStripes/playerDown1.png");
+    }
+
+    25% {
+        background-image: url("../assets/playerStripes/playerDown2.png");
+    }
+
+    50% {
+        transform: translateY(50%);
+        background-image: url("../assets/playerStripes/playerDown1.png");
+    }
+
+    75% {
+        background-image: url("../assets/playerStripes/playerDown2.png");
+    }
+
+    100% {
+        transform: translateY(100%);
+        background-image: url("../assets/playerStripes/playerDown1.png");
+    }
+}
+
+@keyframes movePlayerLeft {
+    0% {
+        transform: translateX(0);
+        background-image: url("../assets/playerStripes/playerLeft1.png");
+    }
+
+    25% {
+        background-image: url("../assets/playerStripes/playerLeft2.png");
+    }
+
+    50% {
+        transform: translateX(-50%);
+        background-image: url("../assets/playerStripes/playerLeft1.png");
+    }
+
+    75% {
+        background-image: url("../assets/playerStripes/playerLeft2.png");
+    }
+
+    100% {
+        transform: translateX(-100%);
+        background-image: url("../assets/playerStripes/playerLeft1.png");
+    }
+}
+
+@keyframes movePlayerRight {
+    0% {
+        transform: translateX(0);
+        background-image: url("../assets/playerStripes/playerRight1.png");
+    }
+
+    25% {
+        background-image: url("../assets/playerStripes/playerRight2.png");
+    }
+
+    50% {
+        transform: translateX(50%);
+        background-image: url("../assets/playerStripes/playerRight1.png");
+    }
+
+    75% {
+        background-image: url("../assets/playerStripes/playerRight2.png");
+    }
+
+    100% {
+        transform: translateX(100%);
+        background-image: url("../assets/playerStripes/playerRight1.png");
+    }
+}
+
+.player-up,
+.player-down,
+.player-left,
+.player-right,
+.player-up-anim,
+.player-down-anim,
+.player-left-anim,
+.player-right-anim {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.player-up-anim {
+    animation: movePlayerUp 0.40s linear;
+}
+
+.player-up {
+    background-image: url("../assets/playerStripes/playerUp.png");
+}
+
+.player-down-anim {
+    animation: movePlayerDown 0.40s linear;
+}
+
+.player-down {
+    background-image: url("../assets/playerStripes/playerDown.png");
+}
+
+.player-left-anim {
+    animation: movePlayerLeft 0.40s linear;
+}
+
+.player-left {
+    background-image: url("../assets/playerStripes/playerLeft.png");
+}
+
+.player-right-anim {
+    animation: movePlayerRight 0.40s linear;
+}
+
+.player-right {
+    background-image: url("../assets/playerStripes/playerRight.png");
 }

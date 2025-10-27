@@ -1,20 +1,10 @@
 import { useSelector } from "react-redux";
 import styles from "./Map.module.css";
+import playerStyles from "./PlayerController.module.css";
 
 function Map() {
     const player = useSelector((state) => state.player);
-    const map = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    ]
+    const map = useSelector((state) => state.map.maps);
 
     const renderMap = (map) => (
         <table className={styles["map"]}>
@@ -25,7 +15,7 @@ function Map() {
                             <td key={colIndex}
                                 className={
                                     cell === 1 ? styles["map-border"] :
-                                        rowIndex === player.playerY && colIndex === player.playerX ? styles["map-player"]
+                                        rowIndex === player.playerY && colIndex === player.playerX ? playerStyles[player.playerStyle]
                                             : styles["map-cell"]}
                             >
 

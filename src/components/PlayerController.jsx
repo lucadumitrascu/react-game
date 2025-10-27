@@ -1,29 +1,30 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     increasePlayerX, increasePlayerY,
-    decreasePlayerX, decreasePlayerY
+    decreasePlayerX, decreasePlayerY, setPlayerStyle
 } from '../redux/slices/playerSlice'
 import styles from './PlayerController.module.css'
 
 function PlayerController() {
     const dispatch = useDispatch()
     const player = useSelector((state) => state.player)
+    const map = useSelector((state) => state.map.maps);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
             switch (event.key) {
                 case "ArrowUp":
-                    dispatch(decreasePlayerY());
+                    handleUpDirection();
                     break;
                 case "ArrowDown":
-                    dispatch(increasePlayerY());
+                    handleDownDirection();
                     break;
                 case "ArrowLeft":
-                    dispatch(decreasePlayerX());
+                    handleLeftDirection();
                     break;
                 case "ArrowRight":
-                    dispatch(increasePlayerX());
+                    handleRightDirection();
                     break;
                 default:
                     break;
@@ -35,7 +36,57 @@ function PlayerController() {
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [dispatch]);
+    }, [dispatch, player]);
+
+    const clicked = useRef(false);
+    const handleLeftDirection = () => {
+        if (player.playerX > 0) {
+            if (!clicked.current && (map[player.playerY][player.playerX - 1] === 0)) {
+                clicked.current = true;
+                dispatch(setPlayerStyle("player-left-anim"));
+                setTimeout(() => {
+                    dispatch(decreasePlayerX());
+                    dispatch(setPlayerStyle("player-left"));
+                    clicked.current = false;
+                }, 400);
+            }
+        }
+    }
+    const handleRightDirection = () => {
+        if (!clicked.current && (map[player.playerY][player.playerX + 1] === 0)) {
+            clicked.current = true;
+            dispatch(setPlayerStyle("player-right-anim"));
+            setTimeout(() => {
+                dispatch(increasePlayerX());
+                dispatch(setPlayerStyle("player-right"));
+                clicked.current = false;
+            }, 400);
+        }
+    }
+
+    const handleUpDirection = () => {
+        if (!clicked.current && (map[player.playerY - 1][player.playerX] === 0)) {
+            clicked.current = true;
+            dispatch(setPlayerStyle("player-up-anim"));
+            setTimeout(() => {
+                dispatch(decreasePlayerY());
+                dispatch(setPlayerStyle("player-up"));
+                clicked.current = false;
+            }, 400);
+        }
+    }
+
+    const handleDownDirection = () => {
+        if (!clicked.current && (map[player.playerY + 1][player.playerX] === 0)) {
+            clicked.current = true;
+            dispatch(setPlayerStyle("player-down-anim"));
+            setTimeout(() => {
+                dispatch(increasePlayerY());
+                dispatch(setPlayerStyle("player-down"));
+                clicked.current = false;
+            }, 400);
+        }
+    }
 
     return (
         <div className={styles["player-controller-container"]}>
@@ -45,12 +96,12 @@ function PlayerController() {
             </div>
             <div className={styles["player-controls"]}>
                 <div>
-                    <button onClick={() => dispatch(decreasePlayerY())}> &#5123;</button>
+                    <button onClick={() => handleUpDirection()}> &#5123;</button>
                 </div>
                 <div>
-                    <button onClick={() => dispatch(decreasePlayerX())}> &#5130;</button>
-                    <button onClick={() => dispatch(increasePlayerY())}> &#5121;</button>
-                    <button onClick={() => dispatch(increasePlayerX())}> &#5125;</button>
+                    <button onClick={() => handleLeftDirection()}> &#5130;</button>
+                    <button onClick={() => handleDownDirection()}> &#5121;</button>
+                    <button onClick={() => handleRightDirection()}> &#5125;</button>
                 </div>
             </div>
         </div>
