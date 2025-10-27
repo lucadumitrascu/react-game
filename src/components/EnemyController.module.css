@@ -1,3 +1,144 @@
-.map-enemy {
-    background-color: red;
+@keyframes moveEnemyUp {
+  0% {
+    transform: translateY(0);
+    background-image: url("../assets/enemyStripes/enemyUp1.png");
+  }
+
+  25% {
+    background-image: url("../assets/enemyStripes/enemyUp2.png");
+  }
+
+  50% {
+    transform: translateY(-50%);
+    background-image: url("../assets/enemyStripes/enemyUp1.png");
+  }
+
+  75% {
+    background-image: url("../assets/enemyStripes/enemyUp2.png");
+  }
+
+  100% {
+    transform: translateY(-100%);
+    background-image: url("../assets/enemyStripes/enemyUp1.png");
+  }
+}
+
+@keyframes moveEnemyDown {
+  0% {
+    transform: translateY(0);
+    background-image: url("../assets/enemyStripes/enemyDown1.png");
+  }
+
+  25% {
+    background-image: url("../assets/enemyStripes/enemyDown2.png");
+  }
+
+  50% {
+    transform: translateY(50%);
+    background-image: url("../assets/enemyStripes/enemyDown1.png");
+  }
+
+  75% {
+    background-image: url("../assets/enemyStripes/enemyDown2.png");
+  }
+
+  100% {
+    transform: translateY(100%);
+    background-image: url("../assets/enemyStripes/enemyDown1.png");
+  }
+}
+
+@keyframes moveEnemyLeft {
+  0% {
+    transform: translateX(0);
+    background-image: url("../assets/enemyStripes/enemyLeft1.png");
+  }
+
+  25% {
+    background-image: url("../assets/enemyStripes/enemyLeft2.png");
+  }
+
+  50% {
+    transform: translateX(-50%);
+    background-image: url("../assets/enemyStripes/enemyLeft1.png");
+  }
+
+  75% {
+    background-image: url("../assets/enemyStripes/enemyLeft2.png");
+  }
+
+  100% {
+    transform: translateX(-100%);
+    background-image: url("../assets/enemyStripes/enemyLeft1.png");
+  }
+}
+
+@keyframes moveEnemyRight {
+  0% {
+    transform: translateX(0);
+    background-image: url("../assets/enemyStripes/enemyRight1.png");
+  }
+
+  25% {
+    background-image: url("../assets/enemyStripes/enemyRight2.png");
+  }
+
+  50% {
+    transform: translateX(50%);
+    background-image: url("../assets/enemyStripes/enemyRight1.png");
+  }
+
+  75% {
+    background-image: url("../assets/enemyStripes/enemyRight2.png");
+  }
+
+  100% {
+    transform: translateX(100%);
+    background-image: url("../assets/enemyStripes/enemyRight1.png");
+  }
+}
+
+.enemy-up,
+.enemy-down,
+.enemy-left,
+.enemy-right,
+.enemy-up-anim,
+.enemy-down-anim,
+.enemy-left-anim,
+.enemy-right-anim {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.enemy-up-anim {
+  animation: moveEnemyUp 0.40s linear;
+}
+
+.enemy-up {
+  background-image: url("../assets/enemyStripes/enemyUp.png");
+}
+
+.enemy-down-anim {
+  animation: moveEnemyDown 0.40s linear;
+}
+
+.enemy-down {
+  background-image: url("../assets/enemyStripes/enemyDown.png");
+}
+
+.enemy-left-anim {
+  animation: moveEnemyLeft 0.40s linear;
+}
+
+.enemy-left {
+  background-image: url("../assets/enemyStripes/enemyLeft.png");
+}
+
+.enemy-right-anim {
+  animation: moveEnemyRight 0.40s linear;
+}
+
+.enemy-right {
+  background-image: url("../assets/enemyStripes/enemyRight.png");
 }

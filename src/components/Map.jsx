@@ -18,7 +18,7 @@ function Map() {
                                 className={
                                     cell === 1 ? styles["map-border"] :
                                         rowIndex === player.playerY && colIndex === player.playerX ? playerStyles[player.playerStyle]
-                                            : rowIndex === enemy.enemyY && colIndex === enemy.enemyX ? enemyStyles["map-enemy"]
+                                            : rowIndex === enemy.enemyY && colIndex === enemy.enemyX ? enemyStyles[enemy.enemyStyle]
                                                 : styles["map-cell"]}
                             >
 
