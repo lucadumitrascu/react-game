@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import styles from "./Map.module.css";
 import playerStyles from "./PlayerController.module.css";
+import enemyStyles from "./EnemyController.module.css";
 
 function Map() {
     const player = useSelector((state) => state.player);
+    const enemy = useSelector((state) => state.enemy);
     const map = useSelector((state) => state.map.maps);
 
     const renderMap = (map) => (
@@ -16,7 +18,8 @@ function Map() {
                                 className={
                                     cell === 1 ? styles["map-border"] :
                                         rowIndex === player.playerY && colIndex === player.playerX ? playerStyles[player.playerStyle]
-                                            : styles["map-cell"]}
+                                            : rowIndex === enemy.enemyY && colIndex === enemy.enemyX ? enemyStyles["map-enemy"]
+                                                : styles["map-cell"]}
                             >
 
                             </td>
