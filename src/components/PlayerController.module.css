@@ -3,17 +3,7 @@
     justify-self: center;
     align-items: center;
     justify-content: center;
-}
-
-.player-position-card {
-    background-color: rgb(88, 86, 81);
-    color: white;
-    padding: 1rem;
-    width: fit-content;
-    align-self: center;
-    justify-self: center;
-    border-radius: 10px;
-    margin-right: 30px;
+    margin-top: 1rem;
 }
 
 .player-position-card h2 {

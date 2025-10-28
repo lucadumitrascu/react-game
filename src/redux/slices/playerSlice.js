@@ -5,6 +5,8 @@ export const playerSlice = createSlice({
     initialState: {
         playerX: 5,
         playerY: 5,
+        hp: 5,
+        str: 1,
         playerStyle: "player-down"
     },
     reducers: {
@@ -38,7 +40,10 @@ export const playerSlice = createSlice({
     },
 });
 
-export const { setPlayerX, setPlayerY, increasePlayerX,
-    increasePlayerY, decreasePlayerX, decreasePlayerY, setPlayerStyle } = playerSlice.actions;
+export const {
+    setPlayerX, setPlayerY,
+    increasePlayerX, increasePlayerY,
+    decreasePlayerX, decreasePlayerY, setPlayerStyle
+} = playerSlice.actions;
 
 export default playerSlice.reducer;

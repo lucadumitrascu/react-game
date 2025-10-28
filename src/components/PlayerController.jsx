@@ -90,10 +90,6 @@ function PlayerController() {
 
     return (
         <div className={styles["player-controller-container"]}>
-            <div className={styles["player-position-card"]}>
-                <h2>Player Position</h2>
-                <p>X: {player.playerX} | Y: {player.playerY}</p>
-            </div>
             <div className={styles["player-controls"]}>
                 <div>
                     <button onClick={() => handleUpDirection()}> &#5123;</button>

@@ -5,6 +5,8 @@ export const enemySlice = createSlice({
     initialState: {
         enemyX: 1,
         enemyY: 1,
+        hp: 5,
+        str: 1,
         enemyStyle: "map-enemy"
     },
     reducers: {
@@ -38,7 +40,10 @@ export const enemySlice = createSlice({
     },
 });
 
-export const { setEnemyX, setEnemyY, increaseEnemyX,
-    increaseEnemyY, decreaseEnemyX, decreaseEnemyY, setEnemyStyle } = enemySlice.actions;
+export const {
+    setEnemyX, setEnemyY,
+    increaseEnemyX, increaseEnemyY,
+    decreaseEnemyX, decreaseEnemyY, setEnemyStyle
+} = enemySlice.actions;
 
 export default enemySlice.reducer;

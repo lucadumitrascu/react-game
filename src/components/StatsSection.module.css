@@ -1,0 +1,50 @@
+.stats-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("../assets/statsPanel.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid #333333;
+    border-radius: 1rem;
+    padding: 1rem 0.5rem;
+    width: 20rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    color: #f5f5f5;
+    font-family: "Press Start 2P", monospace, sans-serif;
+    text-shadow: 2px 2px 2px #000;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.stats-title {
+    color: #ffd369;
+    letter-spacing: 3px;
+    font-size: 1.8rem;
+    margin-top: 0.1rem;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.185);
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 6px 8px;
+}
+
+.stat-label {
+    letter-spacing: 1.5px;
+}
+
+.stat-hp {
+    color: #ff6666;
+}
+
+.stat-str {
+    color: #ffcc00;
+}
+
+.stat-pos {
+    color: #00ff00;
+}
