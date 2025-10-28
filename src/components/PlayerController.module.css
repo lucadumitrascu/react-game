@@ -37,8 +37,10 @@
     font-size: 1.5rem;
     font-weight: bold;
     border-radius: 5px;
-    border: none;
-    background-color: rgb(88, 86, 81);
+    border: 1px solid black;
+    background-image: url("../assets/buttonsBackground.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
     color: white;
     cursor: pointer;
 }

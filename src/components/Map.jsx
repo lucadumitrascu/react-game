@@ -9,14 +9,14 @@ function Map() {
     const map = useSelector((state) => state.map.maps);
 
     const renderMap = (map) => (
-        <table className={styles["map"]}>
+        <table className={`${styles["images-base"]} ${styles["map"]}`}>
             <tbody>
                 {map.map((row, rowIndex) => (
                     <tr key={rowIndex}>
                         {row.map((cell, colIndex) => (
                             <td key={colIndex}
                                 className={
-                                    cell === 1 ? styles["map-border"] :
+                                    cell === 1 ? `${styles["images-base"]} ${styles["map-border"]}` :
                                         rowIndex === player.playerY && colIndex === player.playerX ? playerStyles[player.playerStyle]
                                             : rowIndex === enemy.enemyY && colIndex === enemy.enemyX ? enemyStyles[enemy.enemyStyle]
                                                 : styles["map-cell"]}

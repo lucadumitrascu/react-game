@@ -1,5 +1,7 @@
 :root {
-  background-color: #ffffff;
+  background-image: url("../src/assets/background.jpg");
+  background-position: no-repeat;
+  background-size: contain;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
