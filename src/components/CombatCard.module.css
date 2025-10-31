@@ -1,0 +1,44 @@
+.combat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 12rem;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    border: 0.5px solid rgb(58, 57, 57);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #a6a4a4;
+    color: white;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+}
+
+.stat-label {
+    margin-bottom: 0.1rem;
+    font-weight: bold;
+}
+
+.stat-value {
+    width: max-content;
+    padding: 4px 8px;
+    margin: 0;
+    border: 0.5px solid rgb(58, 57, 57);
+    border-radius: 0.5rem;
+    color: white;
+}
+
+.stat-str {
+    background-color: #2196f3;
+}
+
+.stat-hp {
+    background-color: #f44336;
+}

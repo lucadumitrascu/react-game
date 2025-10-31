@@ -35,9 +35,7 @@ function Map() {
     return (
         <div>
             {renderMap(map)}
-            <CombatModal
-                playerX={player.playerX} playerY={player.playerY}
-                enemyX={enemy.enemyX} enemyY={enemy.enemyY} />
+            <CombatModal player={player} enemy={enemy} />
         </div>
     );
 }
