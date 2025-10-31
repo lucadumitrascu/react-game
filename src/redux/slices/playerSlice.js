@@ -36,14 +36,15 @@ export const playerSlice = createSlice({
         },
         setPlayerStyle: (state, action) => {
             state.playerStyle = action.payload;
-        }
+        },
     },
 });
 
 export const {
     setPlayerX, setPlayerY,
     increasePlayerX, increasePlayerY,
-    decreasePlayerX, decreasePlayerY, setPlayerStyle
+    decreasePlayerX, decreasePlayerY, 
+    setPlayerStyle
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

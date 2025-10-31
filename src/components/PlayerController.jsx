@@ -10,7 +10,8 @@ function PlayerController() {
     const dispatch = useDispatch()
     const player = useSelector((state) => state.player)
     const map = useSelector((state) => state.map.maps);
-
+    const moveTime = 400;
+    
     useEffect(() => {
         const handleKeyDown = (event) => {
             switch (event.key) {
@@ -40,18 +41,17 @@ function PlayerController() {
 
     const clicked = useRef(false);
     const handleLeftDirection = () => {
-        if (player.playerX > 0) {
-            if (!clicked.current && (map[player.playerY][player.playerX - 1] === 0)) {
-                clicked.current = true;
-                dispatch(setPlayerStyle("player-left-anim"));
-                setTimeout(() => {
-                    dispatch(decreasePlayerX());
-                    dispatch(setPlayerStyle("player-left"));
-                    clicked.current = false;
-                }, 400);
-            }
+        if (!clicked.current && (map[player.playerY][player.playerX - 1] === 0)) {
+            clicked.current = true;
+            dispatch(setPlayerStyle("player-left-anim"));
+            setTimeout(() => {
+                dispatch(decreasePlayerX());
+                dispatch(setPlayerStyle("player-left"));
+                clicked.current = false;
+            }, moveTime);
         }
     }
+
     const handleRightDirection = () => {
         if (!clicked.current && (map[player.playerY][player.playerX + 1] === 0)) {
             clicked.current = true;
@@ -60,7 +60,7 @@ function PlayerController() {
                 dispatch(increasePlayerX());
                 dispatch(setPlayerStyle("player-right"));
                 clicked.current = false;
-            }, 400);
+            }, moveTime);
         }
     }
 
@@ -72,7 +72,7 @@ function PlayerController() {
                 dispatch(decreasePlayerY());
                 dispatch(setPlayerStyle("player-up"));
                 clicked.current = false;
-            }, 400);
+            }, moveTime);
         }
     }
 
@@ -84,7 +84,7 @@ function PlayerController() {
                 dispatch(increasePlayerY());
                 dispatch(setPlayerStyle("player-down"));
                 clicked.current = false;
-            }, 400);
+            }, moveTime);
         }
     }
 

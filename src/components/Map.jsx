@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import CombatModal from "./CombatModal";
 import styles from "./Map.module.css";
 import playerStyles from "./PlayerController.module.css";
 import enemyStyles from "./EnemyController.module.css";
@@ -34,6 +35,9 @@ function Map() {
     return (
         <div>
             {renderMap(map)}
+            <CombatModal
+                playerX={player.playerX} playerY={player.playerY}
+                enemyX={enemy.enemyX} enemyY={enemy.enemyY} />
         </div>
     );
 }
