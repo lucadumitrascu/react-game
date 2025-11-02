@@ -1,4 +1,4 @@
-.custom-popup {
+.combat-modal {
     width: 70vw;
     min-height: 70vh;
     border: 2px solid #333;
@@ -9,29 +9,27 @@
     text-shadow: 1px 1px 1px #000;
 }
 
-.combat-modal {
+.combat-modal-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8rem;
 }
 
-.combat-action {
-    margin: 0.5rem;
-    padding: 0.5rem 2rem;
-    box-shadow: 10px 5px 200px rgba(0, 0, 0, 0.3);
-    font-size: 1.3rem;
-    font-weight: bold;
-    background-image: url("../assets/buttonsBackground.jpeg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: 0.3rem;
-    color: white;
-    cursor: pointer;
+.end-combat-modal {
+    width: 30vw;
+    min-height: 25vh;
 }
 
 .combat-action:hover {
     opacity: 0.95;
+}
+
+.combat-action:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    background-color: #a6a4a4;
+    background-image: none;
 }
 
 .defend-action {

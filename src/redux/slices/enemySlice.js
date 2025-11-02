@@ -8,9 +8,13 @@ export const enemySlice = createSlice({
         hp: 5,
         str: 1,
         enemyStyle: "enemy-down",
+        enemyCardStyle: "combat-card",
         paused: false,
     },
     reducers: {
+        setEnemyHp: (state, action) => {
+            state.hp = action.payload;
+        },
         setEnemyX: (state, action) => {
             const value = action.payload;
             if (value > 0 && value < 9) {
@@ -38,20 +42,22 @@ export const enemySlice = createSlice({
         setEnemyStyle: (state, action) => {
             state.enemyStyle = action.payload;
         },
-        setEnemyMoveTime: (state, action) => {
-            state.enemyMoveTime = action.payload;
-        },
         setPaused: (state, action) => {
             state.paused = action.payload;
+        },
+        setEnemyCardStyle: (state, action) => {
+            state.enemyCardStyle = action.payload;
         }
     },
 });
 
 export const {
+    setEnemyHp,
     setEnemyX, setEnemyY,
     increaseEnemyX, increaseEnemyY,
     decreaseEnemyX, decreaseEnemyY,
-    setEnemyStyle, setPaused
+    setEnemyStyle, setEnemyCardStyle,
+    setPaused,
 } = enemySlice.actions;
 
 export default enemySlice.reducer;

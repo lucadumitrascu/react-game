@@ -9,3 +9,21 @@
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
 }
+
+button {
+  margin: 0.5rem;
+  padding: 0.5rem 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-image: url("../src/assets/buttonsBackground.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}

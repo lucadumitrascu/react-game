@@ -31,11 +31,10 @@ function Map() {
         </table>
     );
 
-
     return (
         <div>
             {renderMap(map)}
-            <CombatModal player={player} enemy={enemy} />
+            <CombatModal />
         </div>
     );
 }

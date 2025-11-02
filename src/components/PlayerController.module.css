@@ -21,24 +21,6 @@
     grid-template-rows: 1fr 1fr;
 }
 
-.player-controls button {
-    margin: 0.5rem;
-    padding: 0.5rem 2rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border-radius: 5px;
-    border: 1px solid black;
-    background-image: url("../assets/buttonsBackground.jpeg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: white;
-    cursor: pointer;
-}
-
-.player-controls button:hover {
-    opacity: 0.6;
-}
-
 @keyframes movePlayerUp {
     0% {
         transform: translateY(0);

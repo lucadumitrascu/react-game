@@ -7,9 +7,13 @@ export const playerSlice = createSlice({
         playerY: 5,
         hp: 5,
         str: 1,
-        playerStyle: "player-down"
+        playerStyle: "player-down",
+        playerCardStyle: "combat-card",
     },
     reducers: {
+        setPlayerHp: (state, action) => {
+            state.hp = action.payload;
+        },
         setPlayerX: (state, action) => {
             const value = action.payload;
             if (value > 0 && value < 9) {
@@ -37,14 +41,18 @@ export const playerSlice = createSlice({
         setPlayerStyle: (state, action) => {
             state.playerStyle = action.payload;
         },
+        setPlayerCardStyle: (state, action) => {
+            state.playerCardStyle = action.payload;
+        }
     },
 });
 
 export const {
+    setPlayerHp,
     setPlayerX, setPlayerY,
     increasePlayerX, increasePlayerY,
-    decreasePlayerX, decreasePlayerY, 
-    setPlayerStyle
+    decreasePlayerX, decreasePlayerY,
+    setPlayerStyle, setPlayerCardStyle
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

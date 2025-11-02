@@ -42,3 +42,13 @@
 .stat-hp {
     background-color: #f44336;
 }
+
+.player-pre-attack {
+    background-color: rgb(69, 168, 69);
+    transition: background-color 0.25s ease;
+}
+
+.enemy-pre-attack {
+    background-color: rgb(168, 69, 69);
+    transition: background-color 0.25s ease;
+}
