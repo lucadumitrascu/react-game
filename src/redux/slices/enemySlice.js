@@ -9,6 +9,7 @@ export const enemySlice = createSlice({
         str: 1,
         enemyStyle: "enemy-down",
         enemyCardStyle: "combat-card",
+        enemyAnimStyle: "",
         paused: false,
     },
     reducers: {
@@ -47,6 +48,9 @@ export const enemySlice = createSlice({
         },
         setEnemyCardStyle: (state, action) => {
             state.enemyCardStyle = action.payload;
+        },
+        setEnemyAnimStyle: (state, action) => {
+            state.enemyAnimStyle = action.payload;
         }
     },
 });
@@ -57,7 +61,7 @@ export const {
     increaseEnemyX, increaseEnemyY,
     decreaseEnemyX, decreaseEnemyY,
     setEnemyStyle, setEnemyCardStyle,
-    setPaused,
+    setPaused, setEnemyAnimStyle,
 } = enemySlice.actions;
 
 export default enemySlice.reducer;

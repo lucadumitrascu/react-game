@@ -1,0 +1,114 @@
+.combat-anim {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+    background-color: #b69494;
+    border: 2px solid grey;
+    padding: 0.5rem 2rem;
+    width: 20vw;
+    height: 20vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.combat-player,
+.combat-enemy {
+    width: 6rem;
+    height: 6.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 10;
+}
+
+.combat-player {
+    background-image: url("../assets/combatStripes/combat-player1.png");
+    left: 2rem;
+}
+
+.combat-enemy {
+    background-image: url("../assets/combatStripes/combat-enemy1.png");
+    right: 2rem;
+}
+
+.player-defense {
+    background-image: url("../assets/combatStripes/combat-player-defend.png");
+}
+
+.enemy-defense {
+    background-image: url("../assets/combatStripes/combat-enemy-defend.png");
+}
+
+.player-attack {
+    animation: playerAttack 0.50s forwards linear;
+}
+
+.enemy-attack {
+    animation: enemyAttack 0.50s forwards linear;
+}
+
+.player-damage {
+    opacity: 0.5;
+}
+
+.enemy-damage {
+    opacity: 0.5;
+}
+
+@keyframes playerAttack {
+    0% {
+        left: 2rem;
+        background-image: url("../assets/combatStripes/combat-player1.png");
+    }
+
+    25% {
+        left: 25%;
+        background-image: url("../assets/combatStripes/combat-player1.png");
+    }
+
+    50% {
+        left: 50%;
+        background-image: url("../assets/combatStripes/combat-player3.png");
+    }
+
+    75% {
+        left: 60%;
+        background-image: url("../assets/combatStripes/combat-player2.png");
+    }
+
+    100% {
+        left: 60%;
+        background-image: url("../assets/combatStripes/combat-player2.png");
+    }
+}
+
+@keyframes enemyAttack {
+    0% {
+        right: 2rem;
+        background-image: url("../assets/combatStripes/combat-enemy1.png");
+    }
+
+    25% {
+        right: 25%;
+        background-image: url("../assets/combatStripes/combat-enemy1.png");
+    }
+
+    50% {
+        right: 50%;
+        background-image: url("../assets/combatStripes/combat-enemy3.png");
+    }
+
+    75% {
+        right: 60%;
+        background-image: url("../assets/combatStripes/combat-enemy2.png");
+    }
+
+    100% {
+        right: 60%;
+        background-image: url("../assets/combatStripes/combat-enemy2.png");
+    }
+}
