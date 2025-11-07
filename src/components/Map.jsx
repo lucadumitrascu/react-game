@@ -6,25 +6,34 @@ import enemyStyles from "./EnemyController.module.css";
 
 function Map() {
     const player = useSelector((state) => state.player);
-    const enemy = useSelector((state) => state.enemy);
+    const enemyState = useSelector((state) => state.enemy);
     const map = useSelector((state) => state.map.maps);
+    const enemies = enemyState.enemies;
+
+    const getCellClass = (cell, rowIndex, colIndex, enemy) => {
+        if (cell === 1) {
+            return `${styles["images-base"]} ${styles["map-border"]}`;
+        }
+        if (rowIndex === player.playerY && colIndex === player.playerX) {
+            return playerStyles[player.playerStyle];
+        }
+        if (enemy) {
+            return enemyStyles[enemy.enemyStyle];
+        }
+        return styles["map-cell"];
+    };
 
     const renderMap = (map) => (
         <table className={`${styles["images-base"]} ${styles["map"]}`}>
             <tbody>
                 {map.map((row, rowIndex) => (
                     <tr key={rowIndex}>
-                        {row.map((cell, colIndex) => (
-                            <td key={colIndex}
-                                className={
-                                    cell === 1 ? `${styles["images-base"]} ${styles["map-border"]}` :
-                                        rowIndex === player.playerY && colIndex === player.playerX ? playerStyles[player.playerStyle]
-                                            : rowIndex === enemy.enemyY && colIndex === enemy.enemyX ? enemyStyles[enemy.enemyStyle]
-                                                : styles["map-cell"]}
-                            >
-
-                            </td>
-                        ))}
+                        {row.map((cell, colIndex) => {
+                            const enemy = enemies.find((enemy) => enemy.enemyX === colIndex && enemy.enemyY === rowIndex);
+                            return (
+                                <td key={colIndex} className={getCellClass(cell, rowIndex, colIndex, enemy)}></td>
+                            );
+                        })}
                     </tr>
                 ))}
             </tbody>

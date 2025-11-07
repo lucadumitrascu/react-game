@@ -3,13 +3,14 @@ import enemyCardImage from "../assets/enemyStripes/enemyDown.png";
 import styles from "./CombatCard.module.css";
 import { useSelector } from "react-redux";
 
-function CombatCard({ isPlayer }) {
+function CombatCard({ isPlayer, enemyInCombatId = null }) {
 
-    const { hp, str, playerCardStyle, enemyCardStyle } = useSelector((state) =>
-        isPlayer ? state.player : state.enemy
+    const { hp, str, playerCombatCardStyle } = useSelector((state) =>
+        isPlayer ? state.player : state.enemy.enemies.find(enemy => enemy.id === enemyInCombatId)
     );
 
-    const cardStyle = isPlayer ? playerCardStyle : enemyCardStyle;
+    const enemyCombatCardStyle = useSelector((state) => state.enemy.enemyCombatCardStyle);
+    const cardStyle = isPlayer ? playerCombatCardStyle : enemyCombatCardStyle;
     const cardImage = isPlayer ? playerCardImage : enemyCardImage;
 
     return (

@@ -7,73 +7,77 @@ import {
 
 function EnemyController() {
     const dispatch = useDispatch()
-    const enemy = useSelector((state) => state.enemy)
+    const paused = useSelector((state) => state.enemy.paused);
+    const enemies = useSelector((state) => state.enemy.enemies);
     const map = useSelector((state) => state.map.maps);
     const moveTime = 400;
-    
+
     useEffect(() => {
         const interval = setInterval(() => {
-            if (enemy.paused) return;
-            const randomMove = Math.floor(Math.random() * 4);
-            switch (randomMove) {
-                case 0:
-                    handleUpDirection();
-                    break;
-                case 1:
-                    handleDownDirection();
-                    break;
-                case 2:
-                    handleLeftDirection();
-                    break;
-                case 3:
-                    handleRightDirection();
-                    break;
-                default:
-                    break;
-            }
+            enemies.forEach(enemy => {
+                if (paused) return;
+                const randomMove = Math.floor(Math.random() * 4);
+                switch (randomMove) {
+                    case 0:
+                        handleUpDirection(enemy);
+                        break;
+                    case 1:
+                        handleDownDirection(enemy);
+                        break;
+                    case 2:
+                        handleLeftDirection(enemy);
+                        break;
+                    case 3:
+                        handleRightDirection(enemy);
+                        break;
+                    default:
+                        break;
+                }
+            });
         }, moveTime);
 
         return () => clearInterval(interval);
-    }, [dispatch, enemy.paused, enemy]);
+    }, [dispatch, paused, enemies]);
 
-    const handleLeftDirection = () => {
+    const handleLeftDirection = (enemy) => {
         if (map[enemy.enemyY][enemy.enemyX - 1] === 0) {
-            dispatch(setEnemyStyle("enemy-left-anim"));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-left-anim" }));
             setTimeout(() => {
-                dispatch(decreaseEnemyX());
-                dispatch(setEnemyStyle("enemy-left"));
+                dispatch(decreaseEnemyX({ id: enemy.id }));
+                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-left" }));
             }, moveTime);
         }
-    }
-    const handleRightDirection = () => {
+    };
+
+    const handleRightDirection = (enemy) => {
         if (map[enemy.enemyY][enemy.enemyX + 1] === 0) {
-            dispatch(setEnemyStyle("enemy-right-anim"));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-right-anim" }));
             setTimeout(() => {
-                dispatch(increaseEnemyX());
-                dispatch(setEnemyStyle("enemy-right"));
+                dispatch(increaseEnemyX({ id: enemy.id }));
+                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-right" }));
             }, moveTime);
         }
-    }
+    };
 
-    const handleUpDirection = () => {
+    const handleUpDirection = (enemy) => {
         if (map[enemy.enemyY - 1][enemy.enemyX] === 0) {
-            dispatch(setEnemyStyle("enemy-up-anim"));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-up-anim" }));
             setTimeout(() => {
-                dispatch(decreaseEnemyY());
-                dispatch(setEnemyStyle("enemy-up"));
+                dispatch(decreaseEnemyY({ id: enemy.id }));
+                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-up" }));
             }, moveTime);
         }
-    }
+    };
 
-    const handleDownDirection = () => {
+    const handleDownDirection = (enemy) => {
         if (map[enemy.enemyY + 1][enemy.enemyX] === 0) {
-            dispatch(setEnemyStyle("enemy-down-anim"));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-down-anim" }));
             setTimeout(() => {
-                dispatch(increaseEnemyY());
-                dispatch(setEnemyStyle("enemy-down"));
+                dispatch(increaseEnemyY({ id: enemy.id }));
+                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-down" }));
             }, moveTime);
         }
-    }
+    };
 
     return null;
 }

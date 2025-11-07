@@ -13,12 +13,16 @@ function StatsSection({ entity, isPlayer }) {
                     <p className={`${styles["stat-label"]} ${styles["stat-str"]}`}>STR</p>
                     <p>{entity.str}</p>
                 </div>
-                <div className={styles["stat"]}>
-                    <p className={`${styles["stat-label"]} ${styles["stat-pos"]}`}>POS</p>
-                    <p>X: {isPlayer ? entity.playerX : entity.enemyX} Y: {isPlayer ? entity.playerY : entity.enemyY}</p>
-                </div>
+
+                {isPlayer && (
+                    <div className={styles["stat"]}>
+                        <p className={`${styles["stat-label"]} ${styles["stat-pos"]}`}>POS</p>
+                        <p>X: {entity.playerX} Y: {entity.playerY}</p>
+                    </div>
+                )}
             </div>
         </div>
+
     );
 };
 
