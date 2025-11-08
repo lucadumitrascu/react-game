@@ -6,8 +6,16 @@ import store from "../redux/store";
 import { useDispatch } from "react-redux";
 import CombatCard from "./CombatCard";
 import CombatAnimation from "./CombatAnimation";
-import { setEnemyCombatCardStyle, setEnemyCombatAnimStyle, setEnemyHp, removeEnemy, setPaused } from "../redux/slices/enemySlice";
-import { setPlayerCombatCardStyle, setPlayerCombatAnimStyle, setPlayerHp, setPlayerX, setPlayerY } from "../redux/slices/playerSlice";
+import {
+    setEnemyCombatCardStyle, setEnemyCombatAnimStyle, setEnemyInCombatHp,
+    setEnemyHp, setEnemyStr, setPaused, removeEnemy, removeAllEnemies,
+} from "../redux/slices/enemySlice";
+import {
+    setPlayerCombatCardStyle, setPlayerCombatAnimStyle, setPlayerHp,
+    setPlayerX, setPlayerY, setPlayerLevel
+} from "../redux/slices/playerSlice";
+import { setCurrentMapIndex } from "../redux/slices/mapSlice";
+import { useAddEnemies } from "../hooks/useAddEnemies";
 import styles from "./CombatModal.module.css";
 
 function CombatModal() {
@@ -24,11 +32,13 @@ function CombatModal() {
     const enemyInCombatId = useRef(-1);
     const inCombat = useRef(false);
 
+    const addEnemies = useAddEnemies();
+
     useEffect(() => {
         if (inCombat.current) return;
 
         const enemyInCombat = enemy.enemies.find(
-            enemy => player.playerX === enemy.enemyX && player.playerY === enemy.enemyY
+            enemy => player.x === enemy.x && player.y === enemy.y
         );
         if (enemyInCombat) {
             inCombat.current = true;
@@ -37,7 +47,7 @@ function CombatModal() {
             showCombatModal();
             startCombat();
         }
-    }, [player.playerX, player.playerY, enemy.enemies]);
+    }, [player.x, player.y, enemy.enemies]);
 
     const startCombat = () => {
         const combatLoop = () => {
@@ -80,6 +90,12 @@ function CombatModal() {
                     dispatch(setPlayerY(8));
                     dispatch(setPlayerHp(5));
                     dispatch(setPaused(false));
+                    dispatch(removeAllEnemies());
+                    dispatch(setCurrentMapIndex(0));
+                    dispatch(setEnemyHp(5));
+                    dispatch(setEnemyStr(1));
+                    dispatch(setPlayerLevel(0));
+                    addEnemies(1, 5, 1);
                     inCombat.current = false;
                 });
             } else if (enemyHp <= 0) {
@@ -119,7 +135,7 @@ function CombatModal() {
                 setTimeout(() => {
                     dispatch(setEnemyCombatAnimStyle("enemy-damage"));
                     const damage = Math.floor(Math.random() * 5 + 1);
-                    dispatch(setEnemyHp({ id: enemyInCombatId.current, hp: enemyHp - player.str * damage }));
+                    dispatch(setEnemyInCombatHp({ id: enemyInCombatId.current, hp: enemyHp - player.str * damage }));
                     setTimeout(() => {
                         dispatch(setPlayerCombatAnimStyle(""));
                         dispatch(setEnemyCombatAnimStyle(""));
@@ -146,7 +162,6 @@ function CombatModal() {
             dispatch(setEnemyCombatCardStyle(""));
             dispatch(setEnemyCombatAnimStyle("enemy-attack"));
             defendBtnRef.current.disabled = true;
-
             if (!defendClicked.current) {
                 setTimeout(() => {
                     dispatch(setPlayerCombatAnimStyle("player-damage"));

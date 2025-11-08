@@ -9,9 +9,10 @@ import styles from './PlayerController.module.css'
 function PlayerController() {
     const dispatch = useDispatch()
     const player = useSelector((state) => state.player)
-    const map = useSelector((state) => state.map.maps);
+    const map = useSelector((state) => state.map);
+    const currentMap = map.maps[map.currentMapIndex];
     const moveTime = 400;
-    
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             switch (event.key) {
@@ -41,7 +42,9 @@ function PlayerController() {
 
     const clicked = useRef(false);
     const handleLeftDirection = () => {
-        if (!clicked.current && (map[player.playerY][player.playerX - 1] === 0)) {
+        if (!clicked.current
+            && (currentMap[player.y][player.x - 1] === 0
+                || currentMap[player.y][player.x - 1] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-left-anim"));
             setTimeout(() => {
@@ -53,7 +56,9 @@ function PlayerController() {
     }
 
     const handleRightDirection = () => {
-        if (!clicked.current && (map[player.playerY][player.playerX + 1] === 0)) {
+        if (!clicked.current
+            && (currentMap[player.y][player.x + 1] === 0
+                || currentMap[player.y][player.x + 1] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-right-anim"));
             setTimeout(() => {
@@ -65,7 +70,9 @@ function PlayerController() {
     }
 
     const handleUpDirection = () => {
-        if (!clicked.current && (map[player.playerY - 1][player.playerX] === 0)) {
+        if (!clicked.current
+            && (currentMap[player.y - 1][player.x] === 0
+                || currentMap[player.y - 1][player.x] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-up-anim"));
             setTimeout(() => {
@@ -77,7 +84,9 @@ function PlayerController() {
     }
 
     const handleDownDirection = () => {
-        if (!clicked.current && (map[player.playerY + 1][player.playerX] === 0)) {
+        if (!clicked.current
+            && (currentMap[player.y + 1][player.x] === 0
+                || currentMap[player.y + 1][player.x] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-down-anim"));
             setTimeout(() => {

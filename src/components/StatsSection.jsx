@@ -17,7 +17,7 @@ function StatsSection({ entity, isPlayer }) {
                 {isPlayer && (
                     <div className={styles["stat"]}>
                         <p className={`${styles["stat-label"]} ${styles["stat-pos"]}`}>POS</p>
-                        <p>X: {entity.playerX} Y: {entity.playerY}</p>
+                        <p>X: {entity.x} Y: {entity.y}</p>
                     </div>
                 )}
             </div>

@@ -7,9 +7,11 @@ import {
 
 function EnemyController() {
     const dispatch = useDispatch()
-    const paused = useSelector((state) => state.enemy.paused);
-    const enemies = useSelector((state) => state.enemy.enemies);
-    const map = useSelector((state) => state.map.maps);
+    const enemy = useSelector((state) => state.enemy);
+    const enemies = enemy.enemies;
+    const paused = enemy.paused;
+    const map = useSelector((state) => state.map);
+    const currentMap = map.maps[map.currentMapIndex];
     const moveTime = 400;
 
     useEffect(() => {
@@ -40,7 +42,7 @@ function EnemyController() {
     }, [dispatch, paused, enemies]);
 
     const handleLeftDirection = (enemy) => {
-        if (map[enemy.enemyY][enemy.enemyX - 1] === 0) {
+        if (currentMap[enemy.y][enemy.x - 1] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-left-anim" }));
             setTimeout(() => {
                 dispatch(decreaseEnemyX({ id: enemy.id }));
@@ -50,7 +52,7 @@ function EnemyController() {
     };
 
     const handleRightDirection = (enemy) => {
-        if (map[enemy.enemyY][enemy.enemyX + 1] === 0) {
+        if (currentMap[enemy.y][enemy.x + 1] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-right-anim" }));
             setTimeout(() => {
                 dispatch(increaseEnemyX({ id: enemy.id }));
@@ -60,7 +62,7 @@ function EnemyController() {
     };
 
     const handleUpDirection = (enemy) => {
-        if (map[enemy.enemyY - 1][enemy.enemyX] === 0) {
+        if (currentMap[enemy.y - 1][enemy.x] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-up-anim" }));
             setTimeout(() => {
                 dispatch(decreaseEnemyY({ id: enemy.id }));
@@ -70,7 +72,7 @@ function EnemyController() {
     };
 
     const handleDownDirection = (enemy) => {
-        if (map[enemy.enemyY + 1][enemy.enemyX] === 0) {
+        if (currentMap[enemy.y + 1][enemy.x] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-down-anim" }));
             setTimeout(() => {
                 dispatch(increaseEnemyY({ id: enemy.id }));

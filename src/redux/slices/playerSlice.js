@@ -3,38 +3,33 @@ import { createSlice } from "@reduxjs/toolkit";
 export const playerSlice = createSlice({
     name: "player",
     initialState: {
-        playerX: 5,
-        playerY: 5,
+        x: 5,
+        y: 5,
         hp: 5,
         str: 1,
+        level: 0,
         playerStyle: "player-down",
         playerCombatCardStyle: "combat-card",
         playerCombatAnimStyle: "",
     },
     reducers: {
         setPlayerX: (state, action) => {
-            const value = action.payload;
-            if (value > 0 && value < 9) {
-                state.playerX = value;
-            }
+            state.x = action.payload;
         },
         setPlayerY: (state, action) => {
-            const value = action.payload;
-            if (value > 0 && value < 9) {
-                state.playerY = value;
-            }
+            state.y = action.payload;
         },
         increasePlayerX: (state) => {
-            if (state.playerX < 8) state.playerX += 1;
+            state.x += 1;
         },
         increasePlayerY: (state) => {
-            if (state.playerY < 8) state.playerY += 1;
+            state.y += 1;
         },
         decreasePlayerX: (state) => {
-            if (state.playerX > 1) state.playerX -= 1;
+            state.x -= 1;
         },
         decreasePlayerY: (state) => {
-            if (state.playerY > 1) state.playerY -= 1;
+            state.y -= 1;
         },
         setPlayerStyle: (state, action) => {
             state.playerStyle = action.payload;
@@ -48,6 +43,9 @@ export const playerSlice = createSlice({
         setPlayerHp: (state, action) => {
             state.hp = action.payload;
         },
+        setPlayerLevel: (state, action) => {
+            state.level = action.payload;
+        }
     },
 });
 
@@ -56,7 +54,7 @@ export const {
     increasePlayerX, increasePlayerY,
     decreasePlayerX, decreasePlayerY,
     setPlayerStyle, setPlayerCombatCardStyle, setPlayerCombatAnimStyle,
-    setPlayerHp,
+    setPlayerHp, setPlayerLevel
 } = playerSlice.actions;
 
 export default playerSlice.reducer;
