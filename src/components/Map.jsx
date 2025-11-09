@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CombatModal from "./CombatModal";
 import MapController from "./MapController";
@@ -12,9 +13,23 @@ function Map() {
     const enemies = enemy.enemies;
     const noEnemies = enemies.length === 0;
 
+    const [doorStyle, setDoorStyle] = useState();
+    useEffect(() => {
+        if (noEnemies && doorStyle !== "door-opened") {
+            setDoorStyle("door-opened");
+
+            const timer = setTimeout(() => {
+                setDoorStyle("door-opened-static");
+            }, 750);
+            return () => clearTimeout(timer);
+        } else if (!noEnemies) {
+            setDoorStyle("door-closed");
+        }
+    }, [noEnemies]);
+
     const getCellClass = (cell, rowIndex, colIndex, enemy) => {
         if (cell === 2) {
-            return `${styles["images-base"]} ${noEnemies ? styles["door-opened"] : styles["door-closed"]}`;
+            return `${styles["images-base"]} ${styles[doorStyle]}`;
         }
         if (cell === 1) {
             return `${styles["images-base"]} ${styles["map-border"]}`;
@@ -34,9 +49,14 @@ function Map() {
                 {map.maps[map.currentMapIndex].map((row, rowIndex) => (
                     <tr key={rowIndex}>
                         {row.map((cell, colIndex) => {
-                            const enemy = enemies.find((enemy) => enemy.x === colIndex && enemy.y === rowIndex);
+                            const enemy = enemies.find(
+                                (enemy) => enemy.x === colIndex && enemy.y === rowIndex
+                            );
                             return (
-                                <td key={colIndex} className={getCellClass(cell, rowIndex, colIndex, enemy)}></td>
+                                <td
+                                    key={colIndex}
+                                    className={getCellClass(cell, rowIndex, colIndex, enemy)}
+                                ></td>
                             );
                         })}
                     </tr>

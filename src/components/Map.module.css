@@ -19,14 +19,6 @@
     background-image: url('../assets/wall.jpg');
 }
 
-.door-opened {
-    background-image: url('../assets/doorOpened.png');
-}
-
-.door-closed {
-    background-image: url('../assets/doorClosed.png');
-}
-
 .images-base,
 .map-0,
 .map-1 {
@@ -53,4 +45,52 @@
 
 .map-4 {
     background-image: url("../assets/maps/map5.png");
+}
+
+.door-opened-static {
+    background-image: url("../assets/door4.png");
+}
+
+.door-opened {
+    animation: openDoorAnim 0.75s ease-in-out forwards;
+}
+
+.door-closed {
+    animation: closeDoorAnim 0.75s ease-in-out forwards;
+}
+
+@keyframes openDoorAnim {
+    0% {
+        background-image: url("../assets/door1.png");
+    }
+
+    35% {
+        background-image: url("../assets/door2.png");
+    }
+
+    70% {
+        background-image: url("../assets/door3.png");
+    }
+
+    100% {
+        background-image: url("../assets/door4.png");
+    }
+}
+
+@keyframes closeDoorAnim {
+    0% {
+        background-image: url("../assets/door4.png");
+    }
+
+    35% {
+        background-image: url("../assets/door3.png");
+    }
+
+    70% {
+        background-image: url("../assets/door2.png");
+    }
+
+    100% {
+        background-image: url("../assets/door1.png");
+    }
 }
