@@ -27,6 +27,12 @@
     background-repeat: no-repeat;
 }
 
+.map-2,
+.map-3,
+.map-4 {
+    background-position: center;
+}
+
 .map-0 {
     background-image: url("../assets/maps/map1.png");
 }
@@ -41,6 +47,7 @@
 
 .map-3 {
     background-image: url("../assets/maps/map4.png");
+    background-position: center;
 }
 
 .map-4 {
