@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { sleep } from '../utils/sleep'
 import {
     increaseEnemyX, increaseEnemyY,
     decreaseEnemyX, decreaseEnemyY, setEnemyStyle
@@ -41,43 +42,39 @@ function EnemyController() {
         return () => clearInterval(interval);
     }, [dispatch, paused, enemies]);
 
-    const handleLeftDirection = (enemy) => {
+    const handleLeftDirection = async (enemy) => {
         if (currentMap[enemy.y][enemy.x - 1] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-left-anim" }));
-            setTimeout(() => {
-                dispatch(decreaseEnemyX({ id: enemy.id }));
-                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-left" }));
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(decreaseEnemyX({ id: enemy.id }));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-left" }));
         }
     };
 
-    const handleRightDirection = (enemy) => {
+    const handleRightDirection = async (enemy) => {
         if (currentMap[enemy.y][enemy.x + 1] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-right-anim" }));
-            setTimeout(() => {
-                dispatch(increaseEnemyX({ id: enemy.id }));
-                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-right" }));
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(increaseEnemyX({ id: enemy.id }));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-right" }));
         }
     };
 
-    const handleUpDirection = (enemy) => {
+    const handleUpDirection = async (enemy) => {
         if (currentMap[enemy.y - 1][enemy.x] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-up-anim" }));
-            setTimeout(() => {
-                dispatch(decreaseEnemyY({ id: enemy.id }));
-                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-up" }));
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(decreaseEnemyY({ id: enemy.id }));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-up" }));
         }
     };
 
-    const handleDownDirection = (enemy) => {
+    const handleDownDirection = async (enemy) => {
         if (currentMap[enemy.y + 1][enemy.x] === 0) {
             dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-down-anim" }));
-            setTimeout(() => {
-                dispatch(increaseEnemyY({ id: enemy.id }));
-                dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-down" }));
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(increaseEnemyY({ id: enemy.id }));
+            dispatch(setEnemyStyle({ id: enemy.id, style: "enemy-down" }));
         }
     };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { sleep } from "../utils/sleep";
 import CombatModal from "./CombatModal";
 import MapController from "./MapController";
 import playerStyles from "./PlayerController.module.css";
@@ -15,16 +16,17 @@ function Map() {
 
     const [doorStyle, setDoorStyle] = useState();
     useEffect(() => {
-        if (noEnemies && doorStyle !== "door-opened") {
-            setDoorStyle("door-opened");
-
-            const timer = setTimeout(() => {
+        const handleDoorAnimations = async () => {
+            if (noEnemies && doorStyle !== "door-opened") {
+                setDoorStyle("door-opened");
+                await sleep(750);
                 setDoorStyle("door-opened-static");
-            }, 750);
-            return () => clearTimeout(timer);
-        } else if (!noEnemies) {
-            setDoorStyle("door-closed");
-        }
+            } else if (!noEnemies) {
+                setDoorStyle("door-closed");
+            }
+        };
+
+        handleDoorAnimations();
     }, [noEnemies]);
 
     const getCellClass = (cell, rowIndex, colIndex, enemy) => {

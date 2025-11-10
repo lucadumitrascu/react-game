@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "../redux/store";
-import { useDispatch } from "react-redux";
+import { sleep } from "../utils/sleep";
 import CombatCard from "./CombatCard";
 import CombatAnimation from "./CombatAnimation";
 import {
@@ -50,25 +50,25 @@ function CombatModal() {
     }, [player.x, player.y, enemy.enemies]);
 
     const startCombat = () => {
-        const combatLoop = () => {
+        const combatLoop = async () => {
             const playerHp = store.getState().player.hp;
             const enemy = store.getState().enemy.enemies.find(e => e.id === enemyInCombatId.current);
 
-            if (checkCombatStatus(playerHp, enemy.hp)) {
-                return;
-            }
+            if (checkCombatStatus(playerHp, enemy.hp)) return;
+
             attackTurn.current = Math.random() > 0.5 ? "player" : "enemy";
 
             if (attackTurn.current === "player") {
-                performPlayerAttack(enemy.hp);
-            }
-            else {
-                performEnemyAttack(playerHp, enemy.str);
+                await performPlayerAttack(enemy.hp);
+            } else {
+                await performEnemyAttack(playerHp, enemy.str);
             }
 
-            setTimeout(combatLoop, Math.floor(Math.random() * 500 + 500) + 1350);
+            await sleep(Math.floor(Math.random() * 500 + 1500));
+            combatLoop();
         };
-        setTimeout(combatLoop, 1500);
+
+        sleep(1500).then(combatLoop);
     };
 
     const checkCombatStatus = (playerHp, enemyHp) => {
@@ -122,67 +122,61 @@ function CombatModal() {
         return false;
     };
 
-    const performPlayerAttack = (enemyHp) => {
+    const performPlayerAttack = async (enemyHp) => {
         dispatch(setPlayerCombatCardStyle("player-pre-attack"));
         attackBtnRef.current.disabled = false;
 
-        setTimeout(() => {
-            attackBtnRef.current.disabled = true;
-            dispatch(setPlayerCombatAnimStyle("player-attack"));
-            dispatch(setPlayerCombatCardStyle(""));
+        await sleep(500);
+        attackBtnRef.current.disabled = true;
+        dispatch(setPlayerCombatAnimStyle("player-attack"));
+        dispatch(setPlayerCombatCardStyle(""));
 
-            if (attackClicked.current) {
-                setTimeout(() => {
-                    dispatch(setEnemyCombatAnimStyle("enemy-damage"));
-                    const damage = Math.floor(Math.random() * 5 + 1);
-                    dispatch(setEnemyInCombatHp({ id: enemyInCombatId.current, hp: enemyHp - player.str * damage }));
-                    setTimeout(() => {
-                        dispatch(setPlayerCombatAnimStyle(""));
-                        dispatch(setEnemyCombatAnimStyle(""));
-                    }, 250)
-                }, 650);
-                attackClicked.current = false;
-            } else {
-                setTimeout(() => {
-                    dispatch(setEnemyCombatAnimStyle("enemy-defense"));
-                    setTimeout(() => {
-                        dispatch(setPlayerCombatAnimStyle(""));
-                        dispatch(setEnemyCombatAnimStyle(""));
-                    }, 250)
-                }, 650);
-            }
-        }, 500);
+        if (attackClicked.current) {
+            await sleep(600);
+            dispatch(setEnemyCombatAnimStyle("enemy-damage"));
+            const damage = Math.floor(Math.random() * 5 + 1);
+            dispatch(setEnemyInCombatHp({
+                id: enemyInCombatId.current,
+                hp: enemyHp - player.str * damage
+            }));
+            await sleep(250);
+            dispatch(setPlayerCombatAnimStyle(""));
+            dispatch(setEnemyCombatAnimStyle(""));
+            attackClicked.current = false;
+        } else {
+            await sleep(600);
+            dispatch(setEnemyCombatAnimStyle("enemy-defense"));
+            await sleep(250);
+            dispatch(setPlayerCombatAnimStyle(""));
+            dispatch(setEnemyCombatAnimStyle(""));
+        }
     };
 
-    const performEnemyAttack = (playerHp, enemyStr) => {
+    const performEnemyAttack = async (playerHp, enemyStr) => {
         dispatch(setEnemyCombatCardStyle("enemy-pre-attack"));
         defendBtnRef.current.disabled = false;
 
-        setTimeout(() => {
-            dispatch(setEnemyCombatCardStyle(""));
-            dispatch(setEnemyCombatAnimStyle("enemy-attack"));
-            defendBtnRef.current.disabled = true;
-            if (!defendClicked.current) {
-                setTimeout(() => {
-                    dispatch(setPlayerCombatAnimStyle("player-damage"));
-                    const damage = Math.floor(Math.random() * 5 + 1);
-                    dispatch(setPlayerHp(playerHp - enemyStr * damage));
-                    setTimeout(() => {
-                        dispatch(setPlayerCombatAnimStyle(""));
-                        dispatch(setEnemyCombatAnimStyle(""));
-                    }, 250);
-                }, 600);
-            } else {
-                setTimeout(() => {
-                    dispatch(setPlayerCombatAnimStyle("player-defense"));
-                    setTimeout(() => {
-                        dispatch(setPlayerCombatAnimStyle(""));
-                        dispatch(setEnemyCombatAnimStyle(""));
-                    }, 250);
-                    defendClicked.current = false;
-                }, 600);
-            }
-        }, 500);
+        await sleep(500);
+        dispatch(setEnemyCombatCardStyle(""));
+        dispatch(setEnemyCombatAnimStyle("enemy-attack"));
+        defendBtnRef.current.disabled = true;
+
+        if (!defendClicked.current) {
+            await sleep(600);
+            dispatch(setPlayerCombatAnimStyle("player-damage"));
+            const damage = Math.floor(Math.random() * 5 + 1);
+            dispatch(setPlayerHp(playerHp - enemyStr * damage));
+            await sleep(250);
+            dispatch(setPlayerCombatAnimStyle(""));
+            dispatch(setEnemyCombatAnimStyle(""));
+        } else {
+            await sleep(600);
+            dispatch(setPlayerCombatAnimStyle("player-defense"));
+            await sleep(250);
+            dispatch(setPlayerCombatAnimStyle(""));
+            dispatch(setEnemyCombatAnimStyle(""));
+            defendClicked.current = false;
+        }
     };
 
     const handleCombatDidOpen = () => {

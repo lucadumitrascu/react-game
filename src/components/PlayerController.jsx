@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { sleep } from '../utils/sleep'
 import {
     increasePlayerX, increasePlayerY,
     decreasePlayerX, decreasePlayerY, setPlayerStyle
@@ -41,61 +42,57 @@ function PlayerController() {
     }, [dispatch, player]);
 
     const clicked = useRef(false);
-    const handleLeftDirection = () => {
+    const handleLeftDirection = async () => {
         if (!clicked.current
             && (currentMap[player.y][player.x - 1] === 0
                 || currentMap[player.y][player.x - 1] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-left-anim"));
-            setTimeout(() => {
-                dispatch(decreasePlayerX());
-                dispatch(setPlayerStyle("player-left"));
-                clicked.current = false;
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(decreasePlayerX());
+            dispatch(setPlayerStyle("player-left"));
+            clicked.current = false;
         }
-    }
+    };
 
-    const handleRightDirection = () => {
+    const handleRightDirection = async () => {
         if (!clicked.current
             && (currentMap[player.y][player.x + 1] === 0
                 || currentMap[player.y][player.x + 1] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-right-anim"));
-            setTimeout(() => {
-                dispatch(increasePlayerX());
-                dispatch(setPlayerStyle("player-right"));
-                clicked.current = false;
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(increasePlayerX());
+            dispatch(setPlayerStyle("player-right"));
+            clicked.current = false;
         }
-    }
+    };
 
-    const handleUpDirection = () => {
+    const handleUpDirection = async () => {
         if (!clicked.current
             && (currentMap[player.y - 1][player.x] === 0
                 || currentMap[player.y - 1][player.x] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-up-anim"));
-            setTimeout(() => {
-                dispatch(decreasePlayerY());
-                dispatch(setPlayerStyle("player-up"));
-                clicked.current = false;
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(decreasePlayerY());
+            dispatch(setPlayerStyle("player-up"));
+            clicked.current = false;
         }
-    }
+    };
 
-    const handleDownDirection = () => {
+    const handleDownDirection = async () => {
         if (!clicked.current
             && (currentMap[player.y + 1][player.x] === 0
                 || currentMap[player.y + 1][player.x] === 2)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-down-anim"));
-            setTimeout(() => {
-                dispatch(increasePlayerY());
-                dispatch(setPlayerStyle("player-down"));
-                clicked.current = false;
-            }, moveTime);
+            await sleep(moveTime);
+            dispatch(increasePlayerY());
+            dispatch(setPlayerStyle("player-down"));
+            clicked.current = false;
         }
-    }
+    };
 
     return (
         <div className={styles["player-controller-container"]}>

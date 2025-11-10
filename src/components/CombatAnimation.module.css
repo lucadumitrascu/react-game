@@ -44,11 +44,11 @@
 }
 
 .player-attack {
-    animation: playerAttack 0.50s forwards linear;
+    animation: playerAttack 0.60s forwards linear;
 }
 
 .enemy-attack {
-    animation: enemyAttack 0.50s forwards linear;
+    animation: enemyAttack 0.60s forwards linear;
 }
 
 .player-damage {
