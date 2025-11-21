@@ -3,16 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const enemySlice = createSlice({
     name: "enemy",
     initialState: {
-        enemies: [
-            {
-                id: 1,
-                x: 2,
-                y: 3,
-                hp: 5,
-                str: 1,
-                enemyStyle: "enemy-down",
-            },
-        ],
+        enemies: [],
         hp: 5,
         str: 1,
         enemyCombatCardStyle: "combat-card",

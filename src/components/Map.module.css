@@ -101,3 +101,7 @@
         background-image: url("../assets/door1.png");
     }
 }
+
+.ghost {
+    background-image: url("../assets/ghost.png");
+}

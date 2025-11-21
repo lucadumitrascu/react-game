@@ -6,16 +6,17 @@ import store from "../redux/store";
 import { sleep } from "../utils/sleep";
 import CombatCard from "./CombatCard";
 import CombatAnimation from "./CombatAnimation";
+import { setLevel, setIntroEnded, setOutroEnded } from "../redux/slices/gameSlice";
+import { resetMaps } from "../redux/slices/mapSlice";
 import {
     setEnemyCombatCardStyle, setEnemyCombatAnimStyle, setEnemyInCombatHp,
     setEnemyHp, setEnemyStr, setPaused, removeEnemy, removeAllEnemies,
 } from "../redux/slices/enemySlice";
 import {
     setPlayerCombatCardStyle, setPlayerCombatAnimStyle, setPlayerHp,
-    setPlayerX, setPlayerY, setPlayerLevel
+    setPlayerX, setPlayerY
 } from "../redux/slices/playerSlice";
 import { setCurrentMapIndex } from "../redux/slices/mapSlice";
-import { useAddEnemies } from "../hooks/useAddEnemies";
 import styles from "./CombatModal.module.css";
 
 function CombatModal() {
@@ -31,8 +32,6 @@ function CombatModal() {
     const attackTurn = useRef("player");
     const enemyInCombatId = useRef(-1);
     const inCombat = useRef(false);
-
-    const addEnemies = useAddEnemies();
 
     useEffect(() => {
         if (inCombat.current) return;
@@ -94,8 +93,10 @@ function CombatModal() {
                     dispatch(setCurrentMapIndex(0));
                     dispatch(setEnemyHp(5));
                     dispatch(setEnemyStr(1));
-                    dispatch(setPlayerLevel(0));
-                    addEnemies(1, 5, 1);
+                    dispatch(setLevel(0));
+                    dispatch(setIntroEnded(false));
+                    dispatch(setOutroEnded(false));
+                    dispatch(resetMaps());
                     inCombat.current = false;
                 });
             } else if (enemyHp <= 0) {

@@ -9,7 +9,7 @@ export const mapSlice = createSlice({
             [
                 [1, 1, 1, 1, 1, 1, 1, 1, 2, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+                [1, 0, 0, 0, 0, 0, 0, 4, 1, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -50,14 +50,14 @@ export const mapSlice = createSlice({
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 5, 0, 0, 0, 5, 0, 1],
-                [1, 0, 0, 0, 5, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 1, 0, 2],
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ],
             [
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 2, 1],
+                [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 4, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -71,11 +71,21 @@ export const mapSlice = createSlice({
     reducers: {
         setCurrentMapIndex: (state, action) => {
             state.currentMapIndex = action.payload;
-            state.currentMapStyle = `map-${action.payload}`
+            state.currentMapStyle = `map-${action.payload}`;
         },
+        removeGhost: (state) => {
+            const map = state.maps[state.currentMapIndex];
+            map[2][7] = 0;
+        },
+        resetMaps: (state) => {
+            state.maps[0][2][7] = 4;
+            state.maps[4][2][7] = 4;
+        }
     },
 });
 
-export const { setCurrentMapIndex } = mapSlice.actions;
+export const {
+    setCurrentMapIndex, removeGhost, resetMaps
+} = mapSlice.actions;
 
 export default mapSlice.reducer;

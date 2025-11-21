@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { sleep } from "../utils/sleep";
 import CombatModal from "./CombatModal";
 import MapController from "./MapController";
+import GhostController from "./GhostController";
 import playerStyles from "./PlayerController.module.css";
 import enemyStyles from "./EnemyController.module.css";
 import styles from "./Map.module.css";
@@ -11,6 +12,7 @@ function Map() {
     const player = useSelector((state) => state.player);
     const enemy = useSelector((state) => state.enemy);
     const map = useSelector((state) => state.map);
+    const game = useSelector((state) => state.game);
     const enemies = enemy.enemies;
     const noEnemies = enemies.length === 0;
 
@@ -33,15 +35,19 @@ function Map() {
         if (cell === 2) {
             return `${styles["images-base"]} ${styles[doorStyle]}`;
         }
-        if (cell === 1) {
+        else if (cell === 1) {
             return `${styles["images-base"]} ${styles["map-border"]}`;
         }
-        if (rowIndex === player.y && colIndex === player.x) {
+        else if (cell === 4 && noEnemies) {
+            return `${styles["images-base"]} ${styles["ghost"]}`;
+        }
+        else if (rowIndex === player.y && colIndex === player.x) {
             return playerStyles[player.playerStyle];
         }
-        if (enemy) {
+        else if (enemy) {
             return enemyStyles[enemy.enemyStyle];
         }
+
         return styles["map-cell"];
     };
 
@@ -72,6 +78,7 @@ function Map() {
             {renderMap(map)}
             <CombatModal />
             <MapController />
+            <GhostController />
         </div>
     );
 }
