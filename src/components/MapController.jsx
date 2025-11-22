@@ -16,97 +16,83 @@ function MapController() {
     const noEnemies = useSelector(state => state.enemy.enemies.length === 0);
     const addEnemies = useAddEnemies();
 
+    const mapTransitions = [
+        {
+            fromMap: 0, exitPos: { x: 8, y: 0 },
+            toMap: 1, spawnPos: { x: 8, y: 8 },
+            nextLevel: 1, enemyConfig: { hp: 10, str: 2, count: 2 }
+        },
+        {
+            fromMap: 1, exitPos: { x: 0, y: 1 },
+            toMap: 2, spawnPos: { x: 8, y: 1 },
+            nextLevel: 2, enemyConfig: { hp: 15, str: 3, count: 3 }
+        },
+        {
+            fromMap: 1, exitPos: { x: 8, y: 9 },
+            toMap: 0, spawnPos: { x: 8, y: 1 }
+        },
+        {
+            fromMap: 2, exitPos: { x: 1, y: 9 },
+            toMap: 3, spawnPos: { x: 1, y: 1 },
+            nextLevel: 3, enemyConfig: { hp: 20, str: 4, count: 4 }
+        },
+        {
+            fromMap: 2, exitPos: { x: 9, y: 1 },
+            toMap: 1, spawnPos: { x: 1, y: 1 }
+        },
+        {
+            fromMap: 3, exitPos: { x: 9, y: 8 },
+            toMap: 4, spawnPos: { x: 1, y: 8 },
+            nextLevel: 4, enemyConfig: { hp: 25, str: 5, count: 5 }
+        },
+        {
+            fromMap: 3, exitPos: { x: 1, y: 0 },
+            toMap: 2, spawnPos: { x: 1, y: 8 },
+            nextLevel: 5
+        },
+        {
+            fromMap: 4, exitPos: { x: 0, y: 8 },
+            toMap: 3, spawnPos: { x: 8, y: 8 }
+        }
+    ];
+
     useEffect(() => {
-        if (map.currentMapIndex === 0) { // MAP 1
-            if (noEnemies && player.x === 8 && player.y === 0) {
-                if (level === 0) {
-                    dispatch(setLevel(1));
-                    dispatch(setEnemyHp(10));
-                    dispatch(setEnemyStr(2));
-                    addEnemies(2, 10, 2);
-                }
-                dispatch(setPlayerY(8));
-                dispatch(setCurrentMapIndex(1));
+        const activeTransition = mapTransitions.find(t => t.fromMap === map.currentMapIndex &&
+            player.x === t.exitPos.x && player.y === t.exitPos.y);
 
-            } else if (!noEnemies && player.x === 8 && player.y === 0) {
-                dispatch(setPlayerY(1));
+        if (!activeTransition) return;
+
+        if (noEnemies) {
+            if (activeTransition.nextLevel && level === activeTransition.nextLevel - 1) {
+                dispatch(setLevel(activeTransition.nextLevel));
+                if (activeTransition.enemyConfig) {
+                    const enemyConfig = activeTransition.enemyConfig;
+                    dispatch(setEnemyHp(enemyConfig.hp));
+                    dispatch(setEnemyStr(enemyConfig.str));
+                    addEnemies(enemyConfig.count, enemyConfig.hp, enemyConfig.str);
+                }
             }
 
-        } else if (map.currentMapIndex === 1) { // MAP 2
-            if (noEnemies && player.x === 0 && player.y === 1) {
-                if (level === 1) {
-                    dispatch(setLevel(2));
-                    dispatch(setEnemyHp(15));
-                    dispatch(setEnemyStr(3));
-                    addEnemies(3, 15, 3);
-                }
-                dispatch(setPlayerX(8));
-                dispatch(setCurrentMapIndex(2));
-            } else if (!noEnemies && player.x === 0 && player.y === 1) {
+            dispatch(setPlayerX(activeTransition.spawnPos.x));
+            dispatch(setPlayerY(activeTransition.spawnPos.y));
+            dispatch(setCurrentMapIndex(activeTransition.toMap));
+        } else {
+            if (activeTransition.exitPos.x === 0) {
                 dispatch(setPlayerX(1));
-            }
-
-            if (noEnemies && player.x === 8 && player.y === 9) {
-                dispatch(setCurrentMapIndex(0));
-                dispatch(setPlayerY(1));
-            } else if (!noEnemies && player.x === 8 && player.y === 9) {
-                dispatch(setPlayerY(8));
-            }
-            
-        } else if (map.currentMapIndex === 2) { // MAP 3
-            if (noEnemies && player.x === 1 && player.y === 9) {
-                if (level === 2) {
-                    dispatch(setLevel(3));
-                    dispatch(setEnemyHp(20));
-                    dispatch(setEnemyStr(4));
-                    addEnemies(4, 20, 4);
-                }
-                dispatch(setPlayerY(1));
-                dispatch(setCurrentMapIndex(3));
-            } else if (!noEnemies && player.x === 1 && player.y === 9) {
-                dispatch(setPlayerY(8));
-            }
-
-            if (noEnemies && player.x === 9 && player.y === 1) {
-                dispatch(setCurrentMapIndex(1));
-                dispatch(setPlayerX(1));
-            } else if (!noEnemies && player.x === 9 && player.y === 1) {
+                return;
+            } else if (activeTransition.exitPos.x === 9) {
                 dispatch(setPlayerX(8));
+                return;
             }
-
-        } else if (map.currentMapIndex === 3) { // MAP 4
-            if (noEnemies && player.x === 9 && player.y === 8) {
-                if (level === 3) {
-                    dispatch(setLevel(4));
-                    dispatch(setEnemyHp(25));
-                    dispatch(setEnemyStr(5));
-                    addEnemies(5, 25, 5);
-                }
-                dispatch(setPlayerX(1));
-                dispatch(setCurrentMapIndex(4));
-            } else if (!noEnemies && player.x === 9 && player.y === 8) {
-                dispatch(setPlayerX(8));
-            }
-
-            if (noEnemies && player.x === 1 && player.y === 0) {
-                if (level === 4) {
-                    dispatch(setLevel(5));
-                }
-                dispatch(setCurrentMapIndex(2));
-                dispatch(setPlayerY(8));
-            } else if (!noEnemies && player.x === 1 && player.y === 0) {
+            if (activeTransition.exitPos.y === 0) {
                 dispatch(setPlayerY(1));
-            }
-
-        } else if (map.currentMapIndex === 4) { // MAP 5
-            if (noEnemies && player.x === 0 && player.y === 8) {
-                dispatch(setPlayerX(8));
-                dispatch(setCurrentMapIndex(3));
-            } else if (!noEnemies && player.x === 0 && player.y === 8) {
-                dispatch(setPlayerX(1));
+                return;
+            } else if (activeTransition.exitPos.y === 9) {
+                dispatch(setPlayerY(8));
+                return;
             }
         }
-    }, [player.x, player.y, map.currentMapIndex, noEnemies]);
+    }, [player.x, player.y, map.currentMapIndex, noEnemies, level]);
 }
 
 export default MapController;
