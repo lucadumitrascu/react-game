@@ -7,7 +7,8 @@ import { setIntroEnded, setOutroEnded } from "../redux/slices/gameSlice";
 import { useAddEnemies } from "../hooks/useAddEnemies";
 import ghostImg from "../assets/ghost.png";
 import playerImg from "../assets/playerStripes/playerDown.png";
-import styles from "./GhostController.module.css";
+import ghostControllerStyles from "./GhostController.module.css";
+import modalStyles from "./Modal.module.css";
 
 function GhostController() {
     const MySwal = withReactContent(Swal);
@@ -56,7 +57,7 @@ function GhostController() {
                 html: (
                     <div>
                         <img src={dialogue[step].img} alt="Character"
-                            className={styles["dialogue-character-img"]} />
+                            className={ghostControllerStyles["dialogue-character-img"]} />
                         <p>{dialogue[step].text}</p>
                         <button
                             onClick={() => {
@@ -70,9 +71,9 @@ function GhostController() {
                 showConfirmButton: false,
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-                showClass: { popup: styles["dialogue-modal-slide-in"] },
+                showClass: { popup: ghostControllerStyles["dialogue-modal-slide-in"] },
                 customClass: {
-                    popup: styles["dialogue-modal"],
+                    popup: `${ghostControllerStyles["dialogue-modal"]} ${modalStyles["base-modal"]}`,
                 },
             });
         };

@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setLevel } from "../redux/slices/gameSlice";
@@ -5,8 +7,12 @@ import { setPlayerX, setPlayerY } from "../redux/slices/playerSlice";
 import { setEnemyStr, setEnemyHp } from "../redux/slices/enemySlice";
 import { setCurrentMapIndex } from "../redux/slices/mapSlice";
 import { useAddEnemies } from "../hooks/useAddEnemies";
+import { restartGame } from "../utils/restartGame";
+import modalStyles from "./Modal.module.css";
 
 function MapController() {
+    const MySwal = withReactContent(Swal);
+
     const dispatch = useDispatch();
     const player = useSelector((state) => state.player);
     const map = useSelector((state) => state.map);
@@ -48,7 +54,10 @@ function MapController() {
         {
             fromMap: 3, exitPos: { x: 1, y: 0 },
             toMap: 2, spawnPos: { x: 1, y: 8 },
-            nextLevel: 5
+        },
+        {
+            fromMap: 4, exitPos: { x: 8, y: 0 },
+            toMap: 5 // END of GAME
         },
         {
             fromMap: 4, exitPos: { x: 0, y: 8 },
@@ -61,6 +70,23 @@ function MapController() {
             player.x === t.exitPos.x && player.y === t.exitPos.y);
 
         if (!activeTransition) return;
+
+        if (activeTransition.toMap === 5) {
+            MySwal.fire({
+                title: <strong>Congratulations!</strong>,
+                text: "You have completed the game",
+                confirmButtonText: "Restart",
+                buttonsStyling: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                customClass: {
+                    popup: modalStyles["base-modal"],
+                },
+            }).then(() => {
+                restartGame();
+            });
+            return;
+        }
 
         if (noEnemies) {
             if (activeTransition.nextLevel && level === activeTransition.nextLevel - 1) {

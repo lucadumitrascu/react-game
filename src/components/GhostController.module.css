@@ -1,11 +1,5 @@
 .dialogue-modal {
-    background-image: url("../assets/combatBackground.jpg");
-    color: white;
-    border-radius: 1rem;
-    width: 50vw;
-    text-shadow: 2px 2px 2px #000;
-    font-weight: bold;
-    font-size: 1.3rem;
+    width: 50vw !important;
 }
 
 .dialogue-character-img {

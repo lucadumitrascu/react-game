@@ -4,20 +4,18 @@ import withReactContent from "sweetalert2-react-content";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "../redux/store";
 import { sleep } from "../utils/sleep";
+import { restartGame } from "../utils/restartGame";
 import CombatCard from "./CombatCard";
 import CombatAnimation from "./CombatAnimation";
-import { setLevel, setIntroEnded, setOutroEnded } from "../redux/slices/gameSlice";
-import { resetMaps } from "../redux/slices/mapSlice";
 import {
-    setEnemyCombatCardStyle, setEnemyCombatAnimStyle, setEnemyInCombatHp,
-    setEnemyHp, setEnemyStr, setPaused, removeEnemy, removeAllEnemies,
+    setEnemyCombatCardStyle, setEnemyCombatAnimStyle,
+    setEnemyInCombatHp, removeEnemy, setPaused
 } from "../redux/slices/enemySlice";
 import {
     setPlayerCombatCardStyle, setPlayerCombatAnimStyle, setPlayerHp,
-    setPlayerX, setPlayerY
 } from "../redux/slices/playerSlice";
-import { setCurrentMapIndex } from "../redux/slices/mapSlice";
-import styles from "./CombatModal.module.css";
+import combatModalStyles from "./CombatModal.module.css";
+import modalStyles from "./Modal.module.css";
 
 function CombatModal() {
     const MySwal = withReactContent(Swal);
@@ -81,35 +79,23 @@ function CombatModal() {
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     customClass: {
-                        popup: `${styles["combat-modal"]} ${styles["end-combat-modal"]}`,
-                        confirmButton: styles["confirm-button"],
+                        popup: `${modalStyles["base-modal"]}`,
                     },
                 }).then(() => {
-                    dispatch(setPlayerX(4));
-                    dispatch(setPlayerY(8));
-                    dispatch(setPlayerHp(5));
-                    dispatch(setPaused(false));
-                    dispatch(removeAllEnemies());
-                    dispatch(setCurrentMapIndex(0));
-                    dispatch(setEnemyHp(5));
-                    dispatch(setEnemyStr(1));
-                    dispatch(setLevel(0));
-                    dispatch(setIntroEnded(false));
-                    dispatch(setOutroEnded(false));
-                    dispatch(resetMaps());
+                    restartGame();
+                    enemyInCombatId.current = -1;
                     inCombat.current = false;
                 });
             } else if (enemyHp <= 0) {
                 MySwal.fire({
                     title: <strong>Congratulations!</strong>,
-                    text: "You won this battle!",
+                    text: "You won this battle",
                     confirmButtonText: "Continue",
                     buttonsStyling: false,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     customClass: {
-                        popup: `${styles["combat-modal"]} ${styles["end-combat-modal"]}`,
-                        confirmButton: styles["confirm-button"],
+                        popup: modalStyles["base-modal"],
                     },
                 }).then(() => {
                     dispatch(removeEnemy({ id: enemyInCombatId.current }))
@@ -190,19 +176,19 @@ function CombatModal() {
             title: <strong>Combat!</strong>,
             html: (
                 <Provider store={store}>
-                    <div className={styles["combat-modal-container"]}>
+                    <div className={combatModalStyles["combat-modal-container"]}>
                         <CombatCard isPlayer={true} />
                         <div>
                             <CombatAnimation />
                             <div>
                                 <button ref={defendBtnRef}
-                                    className={`${styles["combat-action"]} ${styles["defend-action"]}`}
+                                    className={`${combatModalStyles["combat-action"]} ${combatModalStyles["defend-action"]}`}
                                     onClick={() => { defendClicked.current = true; }}>
                                     Defend
                                 </button>
                                 <button
                                     ref={attackBtnRef}
-                                    className={`${styles["combat-action"]} ${styles["attack-action"]}`}
+                                    className={`${combatModalStyles["combat-action"]} ${combatModalStyles["attack-action"]}`}
                                     onClick={() => { attackClicked.current = true; }}>
                                     Attack
                                 </button>
@@ -216,7 +202,7 @@ function CombatModal() {
             allowOutsideClick: false,
             allowEscapeKey: false,
             customClass: {
-                popup: styles["combat-modal"]
+                popup: `${combatModalStyles["combat-modal"]} ${modalStyles["base-modal"]}`
             },
             didOpen: handleCombatDidOpen,
         });

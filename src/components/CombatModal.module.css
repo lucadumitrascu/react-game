@@ -1,12 +1,7 @@
 .combat-modal {
-    width: 70vw;
-    min-height: 70vh;
-    border: 2px solid #333;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-    background-image: url("../assets/combatBackground.jpg");
-    color: white;
-    text-shadow: 1px 1px 1px #000;
+    width: 70vw !important;
+    min-height: 70vh !important;
+    font-size: 1rem !important;
 }
 
 .combat-modal-container {
@@ -14,11 +9,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 8rem;
-}
-
-.end-combat-modal {
-    width: 30vw;
-    min-height: 25vh;
 }
 
 .combat-action:hover {

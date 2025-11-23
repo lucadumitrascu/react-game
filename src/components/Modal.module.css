@@ -1,0 +1,12 @@
+.base-modal {
+    width: 30vw;
+    min-height: 25vh;
+    border: 2px solid #333;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    background-image: url("../assets/modalBackground.jpg");
+    color: white;
+    text-shadow: 2px 2px 2px #000000;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
