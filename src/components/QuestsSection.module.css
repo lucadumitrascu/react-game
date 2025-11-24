@@ -1,0 +1,46 @@
+.quests-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("../assets/statsPanel.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid #333333;
+    border-radius: 1rem;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    text-shadow: 2px 2px 2px #000;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-top: 2rem;
+}
+
+.quests-section h1 {
+    color: rgb(126, 218, 175);
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    letter-spacing: 2px;
+}
+
+.quest {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.185);
+    width: 100%;
+    height: min-content;
+    margin: 0.5rem;
+}
+
+.quest-title {
+    margin: 0;
+    padding: 0;
+    padding-left: 0.5rem;
+}
+
+.quest-progress {
+    margin: 0;
+    padding: 0;
+    padding-right: 0.5rem;
+}

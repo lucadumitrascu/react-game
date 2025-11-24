@@ -12,7 +12,7 @@ function Map() {
     const player = useSelector((state) => state.player);
     const enemy = useSelector((state) => state.enemy);
     const map = useSelector((state) => state.map);
-    const game = useSelector((state) => state.game);
+    const quests = useSelector((state) => state.quest.quests);
     const enemies = enemy.enemies;
     const noEnemies = enemies.length === 0;
 
@@ -32,14 +32,24 @@ function Map() {
     }, [noEnemies]);
 
     const getCellClass = (cell, rowIndex, colIndex, enemy) => {
-        if (cell === 2) {
-            return `${styles["images-base"]} ${styles[doorStyle]}`;
-        }
-        else if (cell === 1) {
+        if (cell === 1) {
             return `${styles["images-base"]} ${styles["map-border"]}`;
         }
-        else if (cell === 4 && noEnemies) {
+        else if (cell === 2) {
+            return `${styles["images-base"]} ${styles[doorStyle]}`;
+        }
+        else if (cell === 3 && noEnemies) {
             return `${styles["images-base"]} ${styles["ghost"]}`;
+        }
+        else if (cell === 4) {
+            if (quests[0].completed) {
+                return `${styles["images-base"]} ${styles["chest-opened"]}`;
+            } else {
+                return `${styles["images-base"]} ${styles["chest-closed"]}`;
+            }
+        }
+        else if (cell === 5 && !player.hasChestKey) {
+            return `${styles["images-base"]} ${styles["key"]}`;
         }
         else if (rowIndex === player.y && colIndex === player.x) {
             return playerStyles[player.playerStyle];

@@ -7,6 +7,7 @@ export const playerSlice = createSlice({
         y: 5,
         hp: 5,
         str: 1,
+        hasChestKey: false,
         playerStyle: "player-down",
         playerCombatCardStyle: "combat-card",
         playerCombatAnimStyle: "",
@@ -42,6 +43,12 @@ export const playerSlice = createSlice({
         setPlayerHp: (state, action) => {
             state.hp = action.payload;
         },
+        setPlayerStr: (state, action) => {
+            state.str = action.payload;
+        },
+        setHasChestKey: (state, action) => {
+            state.hasChestKey = action.payload;
+        }
     },
 });
 
@@ -50,7 +57,7 @@ export const {
     increasePlayerX, increasePlayerY,
     decreasePlayerX, decreasePlayerY,
     setPlayerStyle, setPlayerCombatCardStyle, setPlayerCombatAnimStyle,
-    setPlayerHp
+    setPlayerHp, setPlayerStr, setHasChestKey,
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

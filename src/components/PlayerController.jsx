@@ -41,11 +41,15 @@ function PlayerController() {
         };
     }, [dispatch, player]);
 
+    const walkableTiles = [0, 2, 5];
+
+    const canMoveTo = (x, y) => {
+        return walkableTiles.includes(currentMap[y][x]);
+    };
+
     const clicked = useRef(false);
     const handleLeftDirection = async () => {
-        if (!clicked.current
-            && (currentMap[player.y][player.x - 1] === 0
-                || currentMap[player.y][player.x - 1] === 2)) {
+        if (!clicked.current && canMoveTo(player.x - 1, player.y)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-left-anim"));
             await sleep(moveTime);
@@ -56,9 +60,7 @@ function PlayerController() {
     };
 
     const handleRightDirection = async () => {
-        if (!clicked.current
-            && (currentMap[player.y][player.x + 1] === 0
-                || currentMap[player.y][player.x + 1] === 2)) {
+        if (!clicked.current && canMoveTo(player.x + 1, player.y)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-right-anim"));
             await sleep(moveTime);
@@ -69,9 +71,7 @@ function PlayerController() {
     };
 
     const handleUpDirection = async () => {
-        if (!clicked.current
-            && (currentMap[player.y - 1][player.x] === 0
-                || currentMap[player.y - 1][player.x] === 2)) {
+        if (!clicked.current && canMoveTo(player.x, player.y - 1)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-up-anim"));
             await sleep(moveTime);
@@ -82,9 +82,7 @@ function PlayerController() {
     };
 
     const handleDownDirection = async () => {
-        if (!clicked.current
-            && (currentMap[player.y + 1][player.x] === 0
-                || currentMap[player.y + 1][player.x] === 2)) {
+        if (!clicked.current && canMoveTo(player.x, player.y + 1)) {
             clicked.current = true;
             dispatch(setPlayerStyle("player-down-anim"));
             await sleep(moveTime);

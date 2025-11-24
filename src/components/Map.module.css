@@ -105,3 +105,15 @@
 .ghost {
     background-image: url("../assets/ghost.png");
 }
+
+.chest-closed {
+    background-image: url("../assets/chest1.png");
+}
+
+.chest-opened {
+    background-image: url("../assets/chest2.png");
+}
+
+.key {
+    background-image: url("../assets/key.png");
+}

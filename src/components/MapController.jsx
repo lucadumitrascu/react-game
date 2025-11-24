@@ -1,13 +1,14 @@
+import { useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useAddEnemies } from "../hooks/useAddEnemies";
+import { useRestartGame } from "../hooks/useRestartGame";
+import { useProcessQuest } from "../hooks/useProcessQuest";
 import { setLevel } from "../redux/slices/gameSlice";
-import { setPlayerX, setPlayerY } from "../redux/slices/playerSlice";
+import { setPlayerX, setPlayerY, setHasChestKey } from "../redux/slices/playerSlice";
 import { setEnemyStr, setEnemyHp } from "../redux/slices/enemySlice";
 import { setCurrentMapIndex } from "../redux/slices/mapSlice";
-import { useAddEnemies } from "../hooks/useAddEnemies";
-import { restartGame } from "../utils/restartGame";
 import modalStyles from "./Modal.module.css";
 
 function MapController() {
@@ -21,6 +22,8 @@ function MapController() {
 
     const noEnemies = useSelector(state => state.enemy.enemies.length === 0);
     const addEnemies = useAddEnemies();
+    const processQuest = useProcessQuest();
+    const restartGame = useRestartGame();
 
     const mapTransitions = [
         {
@@ -91,6 +94,7 @@ function MapController() {
         if (noEnemies) {
             if (activeTransition.nextLevel && level === activeTransition.nextLevel - 1) {
                 dispatch(setLevel(activeTransition.nextLevel));
+                processQuest(activeTransition.nextLevel);
                 if (activeTransition.enemyConfig) {
                     const enemyConfig = activeTransition.enemyConfig;
                     dispatch(setEnemyHp(enemyConfig.hp));
@@ -119,6 +123,21 @@ function MapController() {
             }
         }
     }, [player.x, player.y, map.currentMapIndex, noEnemies, level]);
+
+    const openChestPositions = [{ x: 5, y: 2 }, { x: 4, y: 1 }, { x: 6, y: 1 }];
+    const isAtPosition = (positions, player) => positions.some(pos => pos.x === player.x && pos.y === player.y);
+
+    useEffect(() => {
+        const tile = map.maps[map.currentMapIndex][player.y][player.x];
+
+        if (tile === 5 && !player.hasChestKey) {
+            dispatch(setHasChestKey(true));
+        }
+
+        if (map.currentMapIndex === 0 && isAtPosition(openChestPositions, player) && player.hasChestKey) {
+            processQuest(0);
+        }
+    }, [player.x, player.y, map.currentMapIndex, player.hasChestKey]);
 }
 
 export default MapController;

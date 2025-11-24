@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "../redux/store";
+import { Provider, useSelector, useDispatch } from "react-redux";
+import { useProcessQuest } from "../hooks/useProcessQuest";
 import { sleep } from "../utils/sleep";
-import { restartGame } from "../utils/restartGame";
+import { useRestartGame } from "../hooks/useRestartGame";
 import CombatCard from "./CombatCard";
 import CombatAnimation from "./CombatAnimation";
 import {
@@ -31,6 +32,9 @@ function CombatModal() {
     const enemyInCombatId = useRef(-1);
     const inCombat = useRef(false);
 
+    const processQuest = useProcessQuest();
+    const restartGame = useRestartGame();
+    
     useEffect(() => {
         if (inCombat.current) return;
 
@@ -100,6 +104,7 @@ function CombatModal() {
                 }).then(() => {
                     dispatch(removeEnemy({ id: enemyInCombatId.current }))
                     dispatch(setPaused(false));
+                    processQuest(6);
                     enemyInCombatId.current = -1;
                     inCombat.current = false;
                 });
@@ -121,7 +126,9 @@ function CombatModal() {
         if (attackClicked.current) {
             await sleep(600);
             dispatch(setEnemyCombatAnimStyle("enemy-damage"));
+
             const damage = Math.floor(Math.random() * 5 + 1);
+            if (damage === 5) processQuest(5);
             dispatch(setEnemyInCombatHp({
                 id: enemyInCombatId.current,
                 hp: enemyHp - player.str * damage
