@@ -74,24 +74,24 @@ function MapController() {
 
         if (!activeTransition) return;
 
-        if (activeTransition.toMap === 5) {
-            MySwal.fire({
-                title: <strong>Congratulations!</strong>,
-                text: "You have completed the game",
-                confirmButtonText: "Restart",
-                buttonsStyling: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                customClass: {
-                    popup: modalStyles["base-modal"],
-                },
-            }).then(() => {
-                restartGame();
-            });
-            return;
-        }
-
         if (noEnemies) {
+            if (activeTransition.toMap === 5) {
+                MySwal.fire({
+                    title: <strong>Congratulations!</strong>,
+                    text: "You have completed the game",
+                    confirmButtonText: "Restart",
+                    buttonsStyling: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    customClass: {
+                        popup: modalStyles["base-modal"],
+                    },
+                }).then(() => {
+                    restartGame();
+                });
+                return;
+            }
+
             if (activeTransition.nextLevel && level === activeTransition.nextLevel - 1) {
                 dispatch(setLevel(activeTransition.nextLevel));
                 processQuest(activeTransition.nextLevel);
